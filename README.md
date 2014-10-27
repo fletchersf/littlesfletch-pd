@@ -3,5 +3,5 @@ littlesfletch-pd
 
 Personal development projects
 
-javac List.java
-java List
+javac ListMemoryChecker.java
+java ListMemoryChecker
