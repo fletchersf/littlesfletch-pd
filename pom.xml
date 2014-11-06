@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.familysearch</groupId>
+    <artifactId>root</artifactId>
+    <version>1.10.b22</version>
+  </parent>
+
+  <groupId>org.familysearch.littlesfletch</groupId>
+  <artifactId>littlesfletch</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>littlesfletch Java Badge Work</name>
+
+  <!--<ciManagement>-->
+    <!--<system>electriccommander</system>-->
+    <!--<url>https://build.fsglobal.net/commander/link/searchBuilder?formId=editSearch&amp;objectType=job&amp;filtersJob_custom_last=2&amp;filtersJob1_custom_name=jobName&amp;filtersJob1_custom_operator=like&amp;filtersJob1_custom_operand1=littlesfletch-pd-%25</url>-->
+  <!--</ciManagement>-->
+
+  <scm>
+    <connection>scm:git:git@github.com:fs-eng/littlesfletch-pd</connection>
+    <developerConnection>scm:git:git@github.com:fs-eng/littlesfletch-pd</developerConnection>
+    <url>https://github.com/fs-eng/littlesfletch-pd</url>
+  </scm>
+
+  <modules>
+    <module>file-sorter</module>
+  </modules>
+
+  <properties>
+    <java.compiler.version>1.7</java.compiler.version>
+
+    <!-- Third party dependencies -->
+    <aspectj.version>1.7.1</aspectj.version>
+    <activemq.version>5.9.0</activemq.version>
+    <aws-java-sdk.version>1.7.5</aws-java-sdk.version>
+    <commons-dbcp.version>1.4</commons-dbcp.version>
+    <commons-lang3.version>3.3</commons-lang3.version>
+    <commons-lang.version>2.6</commons-lang.version>
+    <fasterxml-jackson.version>2.3.2</fasterxml-jackson.version>
+    <flyway.version>2.3.1</flyway.version>
+    <httpclient.version>4.2.5</httpclient.version>
+    <jackson.version>1.9.13</jackson.version>
+    <jersey.version>1.17.1</jersey.version>
+    <log4j.version>1.2.17</log4j.version>
+    <postgresql.version>9.3-1101-jdbc41</postgresql.version>
+    <servlet-api.version>3.0.1</servlet-api.version>
+    <slf4j.version>1.7.6</slf4j.version>
+    <spring.version>3.2.9.RELEASE</spring.version>
+
+    <!-- Test dependencies -->
+    <catch-exception.version>1.0.4</catch-exception.version>
+    <json-smart.version>2.0-RC3</json-smart.version>
+    <junit.version>4.11</junit.version>
+    <mockito.version>1.9.5</mockito.version>
+    <org.hamcrest.version>1.3</org.hamcrest.version>
+    <testng.version>6.8.8</testng.version>
+
+    <!-- Plugin dependencies -->
+    <build-helper-maven-plugin>1.8</build-helper-maven-plugin>
+    <jacoco-maven-plugin.version>0.6.3.201306030806</jacoco-maven-plugin.version>
+    <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
+    <maven-surefire-plugin.version>2.15</maven-surefire-plugin.version>
+
+    <!-- This supposedly makes it not run the tests a second time for sonar -->
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.surefire.reportsPath>${project.basedir}/target/surefire-reports</sonar.surefire.reportsPath>
+    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+    <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
+    <sonar.jacoco.excludes>
+    </sonar.jacoco.excludes>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>com.googlecode.flyway</groupId>
+        <artifactId>flyway-core</artifactId>
+        <version>${flyway.version}</version>
+      </dependency>
+
+      <!-- Transitive dependencies management -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${fasterxml-jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>${fasterxml-jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${fasterxml-jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>${spring.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${aspectj.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${aspectj.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>${commons-lang.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>${commons-dbcp.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.jersey.contribs</groupId>
+        <artifactId>jersey-spring</artifactId>
+        <version>${jersey.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>${servlet-api.version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.jersey</groupId>
+        <artifactId>jersey-server</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.jersey</groupId>
+        <artifactId>jersey-servlet</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-core-asl</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-jaxrs</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-xc</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpclient.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.jersey</groupId>
+        <artifactId>jersey-core</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.jersey</groupId>
+        <artifactId>jersey-client</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.jersey.contribs</groupId>
+        <artifactId>jersey-apache-client</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.jersey.contribs</groupId>
+        <artifactId>jersey-multipart</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+      <!-- Test dependencies -->
+      <!-- Manage testng's junit dependency on hamcrest (keep this before testng dependency) -->
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>${org.hamcrest.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-library</artifactId>
+        <version>${org.hamcrest.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- mockito, hamcrest, and testng play together better with junit 4.11 and above -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>${testng.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.googlecode.catch-exception</groupId>
+        <artifactId>catch-exception</artifactId>
+        <version>${catch-exception.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-testng</artifactId>
+        <version>${camel.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>net.minidev</groupId>
+        <artifactId>json-smart</artifactId>
+        <version>${json-smart.version}</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>report</id>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+          <!-- According to https://almtools.ldschurch.org/fhconfluence/display/REP/Sonar, we need to add ${argLine} here -->
+          <configuration>
+            <argLine/>
+          </configuration>
+          <executions>
+            <execution>
+              <id>component-tests</id>
+              <phase>integration-test</phase>
+              <goals>
+                <goal>test</goal>
+              </goals>
+              <configuration>
+                <!-- output the results to a different directory than the unit tests to prevent overwriting
+                     the unit test results -->
+                <reportsDirectory>${project.build.directory}/surefire-reports/component</reportsDirectory>
+                <includes>
+                  <include>**/*.java</include>
+                </includes>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+          <configuration>
+            <reportsDirectories>
+              <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+              <reportsDirectory>${project.build.directory}/surefire-reports/component</reportsDirectory>
+            </reportsDirectories>
+          </configuration>
+        </plugin>
+
+        <!-- Copy the Postgres distribution archive to the target directory. -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+          </executions>
+        </plugin>
+
+        <!-- Unpack the Postgres distribution into the target directory. Then delete the archive and create the database password file. -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>${maven-antrun-plugin.version}</version>
+          <executions>
+          </executions>
+          <dependencies>
+            <dependency>
+              <groupId>ant-contrib</groupId>
+              <artifactId>ant-contrib</artifactId>
+              <version>1.0b3</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>ant</groupId>
+                  <artifactId>ant</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <!-- Reserve an unassigned port for the on-demand database -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${build-helper-maven-plugin}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>reserve-network-port</goal>
+              </goals>
+              <phase>pre-integration-test</phase>
+              <configuration>
+                <portNames>
+                  <!-- Reserve an unused port for the on-demand database to keep it isolated -->
+                  <portName>on-demand-db-port</portName>
+                </portNames>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.5</version>
+          <executions>
+          </executions>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
+
+    </plugins>
+
+  </build>
+
+  <profiles>
+    <!-- Set properties identifying the os-specific Postgres distribution -->
+    <profile>
+      <id>linux-x86</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <name>Linux</name>
+          <arch>x86</arch>
+        </os>
+      </activation>
+      <properties>
+        <postgresql-dist.classifier>linux</postgresql-dist.classifier>
+        <postgresql-dist.type>tar.gz</postgresql-dist.type>
+      </properties>
+    </profile>
+    <profile>
+      <id>linux-x64</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <name>Linux</name>
+          <arch>amd64</arch>
+        </os>
+      </activation>
+      <properties>
+        <postgresql-dist.classifier>linux-x64</postgresql-dist.classifier>
+        <postgresql-dist.type>tar.gz</postgresql-dist.type>
+      </properties>
+    </profile>
+    <profile>
+      <id>windows-x86</id>
+      <activation>
+        <os>
+          <family>windows</family>
+          <arch>x86</arch>
+        </os>
+      </activation>
+      <properties>
+        <postgresql-dist.classifier>windows</postgresql-dist.classifier>
+        <postgresql-dist.type>zip</postgresql-dist.type>
+      </properties>
+    </profile>
+    <profile>
+      <id>windows-x64</id>
+      <activation>
+        <os>
+          <family>windows</family>
+          <arch>amd64</arch>
+        </os>
+      </activation>
+      <properties>
+        <postgresql-dist.classifier>windows-x64</postgresql-dist.classifier>
+        <postgresql-dist.type>zip</postgresql-dist.type>
+      </properties>
+    </profile>
+    <profile>
+      <id>osx</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <postgresql-dist.classifier>osx</postgresql-dist.classifier>
+        <postgresql-dist.type>zip</postgresql-dist.type>
+      </properties>
+    </profile>
+  </profiles>
+
+</project>
