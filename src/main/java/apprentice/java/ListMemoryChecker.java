@@ -1,4 +1,4 @@
-package org.littlesfletch;
+package apprentice.java;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
@@ -22,9 +22,9 @@ class ListMemoryChecker
         count++;
       }
     }
-    catch (Throwable e) {
-      System.out.println("Caught throwable: " + e.getMessage());
-    }
+//    catch (OutOfMemoryError e) {
+//      System.out.println("Caught throwable: " + e.getMessage());
+//    }
     finally {
       System.out.println("Chars: " + (count + 1) * 1000);
     }

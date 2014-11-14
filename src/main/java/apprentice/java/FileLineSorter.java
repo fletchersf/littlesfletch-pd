@@ -1,4 +1,4 @@
-package org.littlesfletch;
+package apprentice.java;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,8 @@ class FileLineSorter
 {
   public static void main(String args[])
   {
-    sort(args[0], args[1], true);
+    FileLineSorter.sort("/home/samuel/testFile", "/home/samuel/ascendingFile", true);
+    FileLineSorter.sort("/home/samuel/testFile", "/home/samuel/descendingFile", false);
   }
 
   public static void sort(String inputFile, String outputFile, boolean ascending) {
